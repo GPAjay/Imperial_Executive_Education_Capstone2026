@@ -1,10 +1,7 @@
 # Strategy & Approach
 
-How eight unknown functions were optimised over 13 rounds: the core
-method, how it evolved, the per-function pipeline, and the lessons that
+How eight unknown functions were optimised over 13 rounds: the core method, how it evolved, the per-function pipeline, and the lessons that
 shaped each decision.
-
----
 
 ## Core method
 
