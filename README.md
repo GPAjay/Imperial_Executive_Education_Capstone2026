@@ -20,11 +20,32 @@ Final capstone project submission towards the Imperial Business Executive Course
 ---
 ## 📄 Overview
 
+This project is the Capstone requirement for the **Imperial College AI/ML Programme**, running from Module 12 through to Module 24.
+
+The challenge involves optimising **8 unknown black-box functions** of increasing dimensionality (2D to 8D) using a limited number of weekly queries. Each week, one new input point per function is submitted via the capstone portal, and the resulting output is used to refine the search strategy.
+
+The goal is to find the input that **maximises** the output of each function through intelligent, iterative, data-driven decisions — reflecting how optimisation is approached in real-world ML research and industry applications such as hyperparameter tuning, drug discovery, and industrial process optimisation.
+
 ### 💼 Career Relevance
+
+This project directly builds skills needed for data science and ML engineering roles — making decisions under uncertainty, working with limited and expensive-to-acquire data, and iterating strategies based on evidence. These competencies apply to model tuning, A/B testing, experimental design, and any scenario where complete knowledge of the system is unavailable.
+
+---
 
 ## ❓ Problem Statement
 
+Eight synthetic black-box functions are provided, each simulating a real-world optimisation challenge such as radiation detection, drug discovery, or hyperparameter tuning. The internal equations are unknown — only inputs and outputs are observable.
+
+Each function must be **maximised** using limited weekly queries, making smart search strategy essential.
+
+---
+
 ## 🎯 Project Goals
+
+1. **Explore** unknown function landscapes intelligently
+2. **Exploit** promising regions as data grows each week
+3. **Iterate** and refine strategy based on weekly results
+4. **Reflect** on approach and document decision-making throughout
 
 ## 📊 Functions Overview
 | Function | Dimensions | Description | Application |
