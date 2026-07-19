@@ -3,15 +3,15 @@ Capstone project developed for the Imperial College Business School **Profession
 
 # Bayesian Black-Box Optimisation (BBO) Challenge:
 
-![Status](https://img.shields.io/badge/Status-COMPLETE-brightgreen)
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Type](https://img.shields.io/badge/Type-Capstone-green)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Week](https://img.shields.io/badge/Duration-13%20Weeks-brightgreen)
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
-![Week](https://img.shields.io/badge/All%2013%20Weeks-Done-brightgreen)
+![Status](https://img.shields.io/badge/Status-COMPLETE-brightgreen)
 
-This project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, where we get one new query per function per round (13 weeks). The internal equations are unknown, and only the inputs and outputs are observable. This setup resembles real-world problems where the underlying model cannot be ascertained, and data is scarce. The task is to find the input that **maximises** each function through disciplined, evidence-driven, iterative decisions.
+This project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, where we get one new query per function per round (13 weeks). The internal equations are unknown, and only the inputs and outputs are observable. This setup resembles real-world problems where the underlying model cannot be ascertained, and data is limited. The task is to find the input that **maximises** each function through iterative, evidence-driven decisions.
 
-The exercise illustrates how black-box optimisation is applied across research and industry. Examples include ML hyperparameter tuning, experimental design, process optimisation, and drug discovery. In these real-world scenarios, evaluations are often expensive in both cost and time, data is scarce, and the underlying system is a black box. Working with a limited number of query points, the aim is to map the function's landscape and locate its maximum, thereby demonstrating that a black-box function can be characterised and optimised effectively from relatively few samples.
+The capstone project illustrates how black-box optimisation is applied across research and industry. Examples include ML hyperparameter tuning, experimental design, process optimisation, and drug discovery. In these real-world scenarios, evaluations are often expensive in both cost and time, data is scarce, and the underlying system is a black box. Working with a limited number of query points, the aim is to map the function's landscape and locate its maximum, thereby demonstrating that a black-box function can be characterised and optimised effectively from relatively few samples.
 
 
 ## Documentation
@@ -66,14 +66,14 @@ Best output found per function over the course of the capstone project:
 
 | Function | Dim | Best output | Notes |
 |----------|-----|-------------|-------|
-| F1 | 2D | **9.24e-5** | Narrow ridge navigated by small steps; a per-dimension override found the active axis after a long gradient exhausted, and the final round added a further **+37%** |
-| F2 | 2D | **0.7184** | An exploration probe beat local refinement; function confirmed **bimodal** |
+| F1 | 2D | **9.24e-5** | Narrow ridge navigated by small steps; a per-dimension observation found the active axis after a long gradient is exhausted, and the final round improves by **+37%** |
+| F2 | 2D | **0.7184** | An exploration probe helps overcome local maxima; function is found to be **bimodal** |
 | F3 | 3D | **-0.0302** | Converged early to a narrow single peak |
-| F4 | 4D | **0.7420** | Tight bracketed peak; clustering revealed untouched dimensions inside the best region |
-| F5 | 4D | **8662.48** | Boundary push gave the biggest single-round gain (**+85%**); a strongly nonlinear ridge, invisible to the surrogate, surfaced via clustering |
-| F6 | 5D | **-0.1609** | The most volatile function (GP error ~67%); minimal steps and distrusting the model finally beat a long-standing best in the last round |
-| F7 | 6D | **2.9906** | Two bold, well-calibrated multi-dimensional moves the surrogate under-predicted — the final round added **+39%** on top of an earlier +19% |
-| F8 | 8D | **9.9345** | Model converged; surrogate confidence improves while real gains decayed to noise |
+| F4 | 4D | **0.7420** | Tight peak; clustering revealed unexplored dimensions inside the best region |
+| F5 | 4D | **8662.48** | Boundary exploration gave the biggest gain (**+85%**); a strongly nonlinear ridge, invisible to the surrogate, surfaced via clustering |
+| F6 | 5D | **-0.1609** | The most volatile function (GP error ~67%); minimal steps and distrusting the model under-confidence helps find the best value in the last round |
+| F7 | 6D | **2.9906** | Two exploratory, well-calibrated multi-dimensional step identifies the surrogate under-predicted; final round added **+39%** over the previous best |
+| F8 | 8D | **9.9345** | Model converged; surrogate confidence improves while real gains were marginal (attributed to noise) |
 
 Numbers reflect the final results across all 13 rounds; see the
 [Model Card](BBO_Modelcard.md) for the full performance discussion.
@@ -85,7 +85,7 @@ Numbers reflect the final results across all 13 rounds; see the
 This capstone is a compact demonstration of skills that transfer directly to data science, ML engineering, and quantitative decision-making roles:
 
 - **Decision-making under uncertainty:** every round committed to one action on incomplete information, with an explicit, logged rationale.
-- **Working with scarce, expensive data:** the project started with a few data points per function, presenting the regimes where careful modelling is most critical (clinical, experimental, and process data is rarely available in abundance).
+- **Working with scarce, expensive data:** the project started with a few data points per function, presenting the regimes where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
 - **Surrogate modelling and calibration:** fitting Gaussian Processes and SVRs, rationalizing the calibration, and developing intuition on when to trust a confident model.
 - **Diagnostic rigour:** building independent checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
 - **Communication and documentation:** a datasheet, a model card, and reflections to make every decision auditable and reproducible.
