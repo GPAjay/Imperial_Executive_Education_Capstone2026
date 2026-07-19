@@ -84,6 +84,85 @@ Final capstone project submission towards the Imperial Business Executive Course
 
 ## 📁 Repository Structure
 
+
+```
+imperial-aiml-capstone/
+│
+├── README.md
+├── REFERENCES.md
+│
+├── data/
+│   ├── function_1/   (initial_inputs.npy, initial_outputs.npy)
+│   ├── function_2/
+│   └── ... (function_3 through function_8)
+│
+├── module-12/          ← Week 1: Broad GP+UCB exploration
+│   ├── notebooks/
+│   │   └── Module_12_Bayesian_Optimisation_Capstone.ipynb
+│   └── plots/
+│
+├── module-13/          ← Week 2: UCB with log transforms
+│   ├── notebooks/
+│   │   └── Module_13_Week2_Capstone.ipynb
+│   └── plots/
+│
+├── module-14/          ← Week 3: SVM filter (failed)
+│   ├── notebooks/
+│   │   └── Module_14_Week3_Capstone.ipynb
+│   └── plots/
+│
+├── module-15/          ← Week 4: Trust regions + EI ensemble
+│   ├── notebooks/
+│   │   └── Module_15_Week4_Capstone.ipynb
+│   └── plots/
+│
+├── module-16/          ← Week 5: Anchored trust regions
+│   ├── notebooks/
+│   │   └── Module_16_Week5_Capstone.ipynb
+│   └── plots/
+│
+├── module-17/          ← Week 6: Per-function beta tuning (F1, F2, F5 new bests)
+│   ├── notebooks/
+│   │   └── Module_17_Week6_Capstone.ipynb
+│   └── plots/
+│
+├── module-18/          ← Week 7: Tighter radii, lower beta
+│   ├── notebooks/
+│   │   └── Module_18_Week7_Capstone.ipynb
+│   └── plots/
+│
+├── module-19/          ← Week 8: F5, F6, F7 all-time bests
+│   ├── notebooks/
+│   │   └── Module_19_Week8_Capstone.ipynb
+│   └── plots/
+│
+├── module-20/          ← Week 9: F1, F5 all-time bests; F7 momentum
+│   ├── notebooks/
+│   │   └── Module_20_Week9_Capstone.ipynb
+│   └── plots/
+│
+├── module-21/          ← Week 10: F7, F8 all-time bests
+│   ├── notebooks/
+│   │   └── Module_21_Week10_Capstone.ipynb
+│   └── plots/
+│
+├── module-22/          ← Week 11: F7 (3.1034), F8 (9.9750) all-time bests
+│   ├── notebooks/
+│   │   └── Module_22_Week11_Capstone.ipynb
+│   └── plots/
+│
+├── module-23/          ← Week 12: F8 (9.9799) all-time best
+│   ├── notebooks/
+│   │   └── Module_23_Week12_Capstone.ipynb
+│   └── plots/
+│
+└── module-24/          ← Week 13 FINAL: F1 (0.33641), F5 (4039.88), F7 (3.1050) NEW BESTS
+    ├── notebooks/
+    │   └── Module_24_Week13_Capstone.ipynb
+    └── plots/
+```
+
+---
 ## 💻 How to Run
 
 ## 📬 Contact
