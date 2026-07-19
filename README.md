@@ -19,8 +19,8 @@ This capstone is a compact demonstration of skills that transfer directly to dat
 
 - **Decision-making under uncertainty:** Each query point is committed to an action/decision based on incomplete information.
 - **Working with scarce, expensive data:** The project starts with a few data points, presenting the challenges where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
-- **Surrogate modelling and calibration:** Fitting Gaussian Processes and SVRs, rationalizing the calibration, and developing intuition on when to trust a confident model.
-- **Diagnostic rigour:** Building independent diagnostic checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
+- **Surrogate modelling and calibration:** Fitting Gaussian Processes and Support Vector Regression (SVRs), decision trees, ensemble modelling, rationalizing the calibration, and developing intuition on when to trust a confident model.
+- **Diagnostic rigour:** Building independent diagnostic checks (nudge tests, surrogates, clustering) rather than trusting a single black-box recommendation.
 - **Communication and documentation:** A datasheet, a model card, and reflections to make every decision auditable and reproducible.
 
 These are core competencies required for model tuning, experimental design, A/B testing, and any setting where a system must be improved without full knowledge of how it works, including data-driven innovation in healthcare and MedTech.
@@ -33,21 +33,6 @@ These are core competencies required for model tuning, experimental design, A/B 
 | [MODEL CARD](BBO_Modelcard.md) | The optimisation approach, performance, assumptions, limitations, ethics |
 | [STRATEGY & APPROACH](BBO_Strategy_and_Approach.md) | Core method, pipeline, strategy evolution, final results, lessons learned |
 | [`initial_data/`](initial_data) | Seed observations (`X/Y.npy`) provided as the starting point for each function |
-
-
-## The approach in brief
-
-A uniform pipeline is designed, which runs for each round for every function:
-
-1. **Fit two surrogates:** a tuned Gaussian Process (primary) and an SVR (independent cross-check).
-2. **Diagnose locally:** a per-dimension "nudge" test maps the gradient around the current best, independent of the acquisition function.
-3. **Propose candidates:** — Exploration vs Exploitation: expected-improvement (EI) point, the strongest nudge directions, and a manual hypothesis-driven point.
-4. **Filter with the untrust rule:** — discard an acquisition candidate that the model itself does not rate above the current best, based on the concept of Reinforcement Learning.
-5. **Decide:** — submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence.
-
-In the final weeks, **K-means clustering** was added as a diagnostic to characterise each function's search space. It separates high-value regions from exploration scatter, confirms multimodality, and exposes dimensions that were never varied inside the best region.
-
-Full detail: [Strategy & Approach](BBO_Strategy_and_Approach.md).
 
 ## Functions
 
@@ -66,6 +51,19 @@ Full detail: [Strategy & Approach](BBO_Strategy_and_Approach.md).
 **Outputs**: a single scalar value (maxima), the highest positive value or closest to zero for negative data points.
 **Seed data**: 10 to 40 observations per function (varying by function), each dataset grows by one per week.
 
+## The approach in brief
+
+A uniform pipeline is designed, which runs for each round for every function:
+
+1. **Fit two surrogates:** a tuned Gaussian Process (primary) and an SVR (independent cross-check).
+2. **Diagnose locally:** a per-dimension "nudge" test maps the gradient around the current best, independent of the acquisition function.
+3. **Propose candidates:** — Exploration vs Exploitation: expected-improvement (EI) point, the strongest nudge directions, and a manual hypothesis-driven point.
+4. **Filter with the untrust rule:** — discard an acquisition candidate that the model itself does not rate above the current best, based on the concept of Reinforcement Learning.
+5. **Decide:** — submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence.
+
+In the final weeks, **K-means clustering** was added as a diagnostic to characterise each function's search space. It separates high-value regions from exploration scatter, confirms multimodality, and exposes dimensions that were never varied inside the best region.
+
+Full detail: [Strategy & Approach](BBO_Strategy_and_Approach.md).
 
 ## Results
 
@@ -118,7 +116,7 @@ Imperial_Executive_Education_Capstone2026/
 | Libraries | NumPy, SciPy, scikit-learn, Matplotlib |
 | Models | Gaussian Process (Matérn / RBF kernels), SVR |
 | Diagnostics | Per-dimension nudge test, K-means clustering (with silhouette selection), PCA for visualisation |
-| Acquisition | Expected Improvement (bounded radius) |
+| Acquisition | Expected Improvement (bounded radius), Upper Confidence Bound (UCB) |
 | Tooling | Jupyter Notebooks, Git, GitHub |
 
 ## How to run
