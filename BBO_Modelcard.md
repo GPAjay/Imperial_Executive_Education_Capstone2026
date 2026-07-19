@@ -1,6 +1,6 @@
 # Model Card: BBO Challenge
 
-A model card documenting the optimisation *approach* used in this capstone. Follows the model-card framework described in the course: overview, intended use, details, performance, assumptions and limitations, ethical considerations.
+A model card documenting the *optimisation approach* used in this capstone. Follows the Modelcard framework described in the course: overview, intended use, details, performance, assumptions and limitations, ethical considerations.
 
 ## Overview
 
@@ -28,8 +28,7 @@ A model card documenting the optimisation *approach* used in this capstone. Foll
 
 ## Details — strategy evolution
 
-The strategy evolved substantially over the campaign, through three
-broad phases.
+The strategy evolved substantially over the course of the project, classified into three broad phases.
 
 ### Phase 1 — Exploration (early rounds)
 
