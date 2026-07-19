@@ -26,6 +26,16 @@ Final capstone project submission towards the Imperial Business Executive Course
 ## 🎯 Project Goals
 
 ## 📊 Functions Overview
+| Function | Dimensions | Description | Application |
+|----------|-----------|-------------|-------------|
+| F1 | 2D | Radiation Detection | Identify contamination sources in a 2D field |
+| F2 | 2D | Noisy ML Model | Maximise log-likelihood with noisy outputs |
+| F3 | 3D | Drug Discovery | Minimise side effects (negated for maximisation) |
+| F4 | 4D | Warehouse Placement | Optimise product placement across warehouses |
+| F5 | 4D | Chemical Yield | Maximise yield of a chemical process (unimodal) |
+| F6 | 5D | Cake Recipe Optimisation | Maximise recipe score (negative by design, push toward zero) |
+| F7 | 6D | ML Hyperparameter Tuning | Maximise model accuracy/F1 score |
+| F8 | 8D | Complex 8D Optimisation | Maximise validation accuracy across 8 hyperparameters |
 
 ## 📥 Inputs and Outputs
 
