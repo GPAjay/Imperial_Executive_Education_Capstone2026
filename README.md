@@ -31,38 +31,37 @@ Final capstone project submission towards the Imperial Business Executive Course
 
 ## 🗓️ Weekly Progress
 
-## 🏆 All-Time Best Results — FINAL
 
 
 
 ## 📈 Week-by-Week Results Detail
 
-### Week 1 (Module 12) — Broad Exploration
+### Week 1 (Bayesian Optimisation)
 
-### Week 2 (Module 13) — UCB with Log Transforms
+### Week 2 (Logistic Regression)
 
-### Week 3 (Module 14) — SVM Region Filter (Failed)
+### Week 3 (Support Vector Machines)
 
-### Week 4 (Module 15) — Trust Regions + EI Ensemble
+### Week 4 (Neural Networks and Deep Learning: Part One: Introduction)
 
-### Week 5 (Module 16) — Anchored Trust Regions
+### Week 5 (Neural Networks and Deep Learning: Part Two: Advanced Concepts)
 
-### Week 6 (Module 17) — Per-Function Beta Tuning
+### Week 6 (Module 17: Neural Networks and Deep Learning: Part Three: Convolutional Neural Networks)
 
-### Week 7 (Module 18) — Lower Beta, Tighter Radii
+### Week 7 (Hyperparameters and Hyperparameter Tuning)
 
-### Week 8 (Module 19) — Recovery Anchors + F5/F6/F7 Exploit
+### Week 8 (Foundations of Generative AI and Large Language Models (LLMs)
 
 
-### Week 9 (Module 20) — Tight Exploit + Narrow Spike Recovery
+### Week 9 (Advanced Gen AI and LLMs)
 
-### Week 10 (Module 21) — Ultra-Tight F7/F8 Exploit
+### Week 10 (Transparency and Interpretability)
 
-### Week 11 (Module 22) — Manual Overrides vs GP Drift
+### Week 11 (Unsupervised Learning: Part One: Clustering Techniques)
 
-### Week 12 (Module 23) — Results in
+### Week 12 (Unsupervised Learning: Part Two: Principal Component Analysis)
 
-### Week 13 (Module 24) — FINAL — Results In ✅
+### Week 13 (Reinforcement Learning)
 
 ## 🔬 Strategy & Approach
 
@@ -71,6 +70,10 @@ Final capstone project submission towards the Imperial Business Executive Course
 ### 🔄 How the Pipeline Works
 
 ### Key Techniques
+
+
+## 🏆 All-Time Best Results — FINAL
+
 
 ### 🆕 Week 4 Improvements
 
