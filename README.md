@@ -17,7 +17,7 @@ The capstone project illustrates how black-box optimisation is applied across re
 
 This capstone is a compact demonstration of skills that transfer directly to data science, ML engineering, and quantitative decision-making roles:
 
-- **Decision-making under uncertainty:** Each query point is committed to an action/decision based on incomplete information.
+- **Decision-making under uncertainty:** Each query point is committed to an action/decision based on incomplete information, comparing decision strategies such as exploration vs. exploitation, model-driven vs. human-override.
 - **Working with scarce, expensive data:** The project starts with a few data points, presenting the challenges where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
 - **Surrogate modelling and calibration:** Fitting Gaussian Processes and Support Vector Regression (SVRs), decision trees, ensemble modelling, applied Reinforcement Learning, rationalizing the calibration, and developing intuition on when to trust a confident model.
 - **Diagnostic rigour:** Building independent diagnostic checks (nudge tests, surrogates, clustering) rather than trusting a single black-box recommendation.
