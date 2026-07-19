@@ -1,5 +1,5 @@
 # Imperial_Executive_Education_Capstone2026
-Final capstone project submission towards the Imperial Business Executive Course in Professional Certification in Machine Learning and Artificial Intelligence
+Capstone project developed for the Imperial College Business School **Professional Certificate in Machine Learning and Artificial Intelligence**.
 
 # Bayesian Black-Box Optimisation — Capstone Project
 
@@ -9,27 +9,9 @@ Final capstone project submission towards the Imperial Business Executive Course
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
 ![Week](https://img.shields.io/badge/All%2013%20Weeks-Done-brightgreen)
 
-# Bayesian Black-Box Optimisation — Capstone Project
+Over 13 rounds, this project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, one new query per function per round. The internal equations are unknown and only inputs and outputs are observable, resembling real-world problems where the underlying model cannot be ascertained. The task is to find the input that **maximises** each function through disciplined, evidence-driven, iterative decisions.
 
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![Type](https://img.shields.io/badge/Type-Capstone-informational)
-![Rounds](https://img.shields.io/badge/Rounds-13-purple)
-
-Final capstone for the **Imperial College Business School Professional
-Certificate in Machine Learning and Artificial Intelligence**.
-
-Over 13 rounds, this project optimises **eight unknown black-box
-functions** of increasing dimensionality (2D to 8D) under a strict query
-budget — one new query per function per round. The internal equations
-are hidden; only inputs and outputs are observable. The task is to find
-the input that **maximises** each function through disciplined,
-evidence-driven, iterative decisions.
-
-The exercise mirrors how optimisation actually works in research and
-industry — hyperparameter tuning, experimental design, process
-optimisation, drug discovery — where evaluations are expensive, data is
-scarce, and the system is a black box.
+The exercise mirrors how optimisation actually works in research and industry — hyperparameter tuning, experimental design, process optimisation, drug discovery — where evaluations are expensive, data is scarce, and the system is a black box.
 
 ---
 
@@ -38,8 +20,8 @@ scarce, and the system is a black box.
 | Document | What it covers |
 |----------|----------------|
 | [Strategy & Approach](BBO_Strategy_and_Approach.md) | Core method, pipeline, strategy evolution, final results, lessons learned |
-| [Model Card](BBO_Modelcard.md) | The optimisation approach, performance, assumptions, limitations, ethics |
-| [Datasheet](BBO_Datasheet.md) | Dataset composition, collection process, preprocessing, intended and inappropriate uses |
+| [MODEL CARD](BBO_Modelcard.md) | The optimisation approach, performance, assumptions, limitations, ethics |
+| [DATASHEET](BBO_Datasheet.md) | Dataset composition, collection process, preprocessing, intended and inappropriate uses |
 | [`initial_data/`](initial_data) | Seed observations (`.npy`) provided as the starting point for each function |
 
 ---
@@ -48,22 +30,13 @@ scarce, and the system is a black box.
 
 Each round, for every function, a uniform pipeline runs:
 
-1. **Fit two surrogates** — a tuned Gaussian Process (primary) and an
-   SVR (independent cross-check).
-2. **Diagnose locally** — a per-dimension "nudge" test maps the gradient
-   around the current best, independent of the acquisition function.
-3. **Propose candidates** — the expected-improvement point, the
-   strongest nudge directions, and a manual hypothesis-driven point.
-4. **Filter with the "untrust rule"** — never chase an acquisition
-   candidate the model itself does not rate above the current best.
-5. **Decide** — submit the best-supported candidate, overriding the
-   model when the diagnostic gives clearer evidence, and log the full
-   rationale.
+1. **Fit two surrogates** — a tuned Gaussian Process (primary) and an SVR (independent cross-check).
+2. **Diagnose locally** — a per-dimension "nudge" test maps the gradient around the current best, independent of the acquisition function.
+3. **Propose candidates** — the expected-improvement point, the strongest nudge directions, and a manual hypothesis-driven point.
+4. **Filter with the "untrust rule"** — never chase an acquisition candidate the model itself does not rate above the current best.
+5. **Decide** — submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence, and log the full rationale.
 
-In the final weeks, **K-means clustering** was added as a diagnostic to
-characterise each function's search space — separating high-value
-regions from exploration scatter, confirming multimodality, and
-exposing dimensions that had never been varied inside the best region.
+In the final weeks, **K-means clustering** was added as a diagnostic to characterise each function's search space — separating high-value regions from exploration scatter, confirming multimodality, and exposing dimensions that had never been varied inside the best region.
 
 Full detail: [Strategy & Approach](BBO_Strategy_&_Approach.md).
 
@@ -78,8 +51,8 @@ Full detail: [Strategy & Approach](BBO_Strategy_&_Approach.md).
 | F3 | 3D | Drug Discovery | Minimise side effects (negated for maximisation) |
 | F4 | 4D | Warehouse Placement | Optimise product placement |
 | F5 | 4D | Chemical Yield | Maximise yield of a unimodal process |
-| F6 | 5D | Cake Recipe | Maximise a recipe score (negative by design, pushed toward zero) |
-| F7 | 6D | Hyperparameter Tuning | Maximise model accuracy / F1 |
+| F6 | 5D | Cake Recipe Optimization | Maximise a recipe score (negative by design, pushed toward zero) |
+| F7 | 6D | ML Hyperparameter Tuning | Maximise model accuracy / F1 |
 | F8 | 8D | 8D Optimisation | Maximise validation accuracy across eight hyperparameters |
 
 **Inputs**: numerical vectors with every value in [0, 1], submitted as a
@@ -111,30 +84,15 @@ Numbers reflect the final results across all 13 rounds; see the
 
 ## What this project demonstrates
 
-This capstone is a compact demonstration of skills that transfer
-directly to data science, ML engineering, and quantitative
-decision-making roles:
+This capstone is a compact demonstration of skills that transfer directly to data science, ML engineering, and quantitative decision-making roles:
 
-- **Decision-making under uncertainty** — every round committed to one
-  action on incomplete information, with an explicit, logged rationale.
-- **Working with scarce, expensive data** — the entire campaign ran on
-  tens of data points per function, exactly the regime where careful
-  modelling matters most (clinical, experimental, and process data
-  rarely arrive in abundance).
-- **Surrogate modelling and calibration** — fitting Gaussian Processes
-  and SVRs, reading their calibration honestly, and knowing when *not*
-  to trust a confident model.
-- **Diagnostic rigour** — building independent checks (per-dimension
-  nudge tests, dual surrogates, clustering) rather than trusting a
-  single black-box recommendation.
-- **Communication and documentation** — a datasheet, a model card, and
-  round-by-round reflections that make every decision auditable and
-  reproducible.
+- **Decision-making under uncertainty** — every round committed to one action on incomplete information, with an explicit, logged rationale.
+- **Working with scarce, expensive data** — the entire campaign ran on tens of data points per function, exactly the regime where careful modelling matters most (clinical, experimental, and process data rarely arrive in abundance).
+- **Surrogate modelling and calibration** — fitting Gaussian Processes and SVRs, reading their calibration honestly, and knowing when *not* to trust a confident model.
+- **Diagnostic rigour** — building independent checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
+- **Communication and documentation** — a datasheet, a model card, and round-by-round reflections that make every decision auditable and reproducible.
 
-These are the same competencies behind model tuning, experimental
-design, A/B testing, and any setting where a system must be improved
-without full knowledge of how it works — including data-driven
-innovation in health and MedTech.
+These are the same competencies behind model tuning, experimental design, A/B testing, and any setting where a system must be improved without full knowledge of how it works — including data-driven innovation in health and MedTech.
 
 ---
 
