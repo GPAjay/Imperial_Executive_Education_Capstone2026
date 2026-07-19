@@ -13,7 +13,7 @@ Final capstone project submission towards the Imperial Business Executive Course
 
 | Document | Description |
 |----------|-------------|
-| [DATASHEET.md](DATASHEET.md) | Dataset documentation — composition, collection process, preprocessing and intended uses |
+| [DATASHEET.md](BBO_datasheet.md) | Dataset documentation — composition, collection process, preprocessing and intended uses |
 | [MODEL_CARD.md](BBO_Modelcard.md) | Model card — GP-BBO approach, strategy evolution, performance and limitations |
 
 ---
