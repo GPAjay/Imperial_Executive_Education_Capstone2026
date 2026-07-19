@@ -9,11 +9,10 @@ Capstone project developed for the Imperial College Business School **Profession
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
 ![Week](https://img.shields.io/badge/All%2013%20Weeks-Done-brightgreen)
 
-This project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, one new query per function per round. The internal equations are unknown, and only inputs and outputs are observable, resembling real-world problems where the underlying model cannot be ascertained. The task is to find the input that **maximises** each function through disciplined, evidence-driven, iterative decisions.
+This project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, where we get one new query per function per round (13 weeks). The internal equations are unknown, and only the inputs and outputs are observable. This setup resembles real-world problems where the underlying model cannot be ascertained, and data is scarce. The task is to find the input that **maximises** each function through disciplined, evidence-driven, iterative decisions.
 
 The exercise illustrates how black-box optimisation is applied across research and industry. Examples include ML hyperparameter tuning, experimental design, process optimisation, and drug discovery. In these real-world scenarios, evaluations are often expensive in both cost and time, data is scarce, and the underlying system is a black box. Working with a limited number of query points, the aim is to map the function's landscape and locate its maximum, thereby demonstrating that a black-box function can be characterised and optimised effectively from relatively few samples.
 
----
 
 ## Documentation
 
