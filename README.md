@@ -19,7 +19,7 @@ This capstone is a compact demonstration of skills that transfer directly to dat
 
 - **Decision-making under uncertainty:** Each query point is committed to an action/decision based on incomplete information.
 - **Working with scarce, expensive data:** The project starts with a few data points, presenting the challenges where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
-- **Surrogate modelling and calibration:** Fitting Gaussian Processes and Support Vector Regression (SVRs), decision trees, ensemble modelling, rationalizing the calibration, and developing intuition on when to trust a confident model.
+- **Surrogate modelling and calibration:** Fitting Gaussian Processes and Support Vector Regression (SVRs), decision trees, ensemble modelling, applied Reinforcement Learning, rationalizing the calibration, and developing intuition on when to trust a confident model.
 - **Diagnostic rigour:** Building independent diagnostic checks (nudge tests, surrogates, clustering) rather than trusting a single black-box recommendation.
 - **Communication and documentation:** A datasheet, a model card, and reflections to make every decision auditable and reproducible.
 
@@ -58,8 +58,8 @@ A uniform pipeline is designed, which runs for each round for every function:
 1. **Fit two surrogates:** a tuned Gaussian Process (primary) and an SVR (independent cross-check).
 2. **Diagnose locally:** a per-dimension "nudge" test maps the gradient around the current best, independent of the acquisition function.
 3. **Propose candidates:** — Exploration vs Exploitation: expected-improvement (EI) point, the strongest nudge directions, and a manual hypothesis-driven point.
-4. **Filter with the untrust rule:** — discard an acquisition candidate that the model itself does not rate above the current best, based on the concept of Reinforcement Learning.
-5. **Decide:** — submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence.
+4. **Filter with the untrust rule:** discard an acquisition candidate that the model itself does not rate above the current best, application of Reinforcement Learning.
+5. **Decide:** submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence.
 
 In the final weeks, **K-means clustering** was added as a diagnostic to characterise each function's search space. It separates high-value regions from exploration scatter, confirms multimodality, and exposes dimensions that were never varied inside the best region.
 
