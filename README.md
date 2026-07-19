@@ -9,7 +9,7 @@ Capstone project developed for the Imperial College Business School **Profession
 ![Modules](https://img.shields.io/badge/Modules-12--24-purple)
 ![Status](https://img.shields.io/badge/Status-COMPLETE-brightgreen)
 
-This project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, where we get one new query per function per round (13 weeks). The internal equations are unknown, and only the inputs and outputs are observable. This setup resembles real-world problems where the underlying model cannot be ascertained, and data is limited. The task is to find the input that **maximises** each function through iterative, evidence-driven decisions.
+This project optimises **eight unknown black-box functions** of increasing dimensionality (2D to 8D) under a strict query budget, where we get one new query per function per round (13 weeks). The internal equations are unknown, and only the inputs and outputs are observable. This setup resembles real-world problems where the underlying model cannot be ascertained, and data is often limited. The task is to find the input that **maximises** each function through iterative, evidence-driven decisions.
 
 The capstone project illustrates how black-box optimisation is applied across research and industry. Examples include ML hyperparameter tuning, experimental design, process optimisation, and drug discovery. In these real-world scenarios, evaluations are often expensive in both cost and time, data is scarce, and the underlying system is a black box. Working with a limited number of query points, the aim is to map the function's landscape and locate its maximum, thereby demonstrating that a black-box function can be characterised and optimised effectively from relatively few samples.
 
@@ -29,11 +29,11 @@ The capstone project illustrates how black-box optimisation is applied across re
 
 A uniform pipeline is designed, which runs for each round for every function:
 
-1. **Fit two surrogates** — a tuned Gaussian Process (primary) and an SVR (independent cross-check).
-2. **Diagnose locally** — a per-dimension "nudge" test maps the gradient around the current best, independent of the acquisition function.
-3. **Propose candidates** — Exploration vs Exploitation: expected-improvement (EI) point, the strongest nudge directions, and a manual hypothesis-driven point.
-4. **Filter with the "untrust rule"** — discard an acquisition candidate that the model itself does not rate above the current best.
-5. **Decide** — submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence.
+1. **Fit two surrogates:** a tuned Gaussian Process (primary) and an SVR (independent cross-check).
+2. **Diagnose locally:** a per-dimension "nudge" test maps the gradient around the current best, independent of the acquisition function.
+3. **Propose candidates:** — Exploration vs Exploitation: expected-improvement (EI) point, the strongest nudge directions, and a manual hypothesis-driven point.
+4. **Filter with the untrust rule:** — discard an acquisition candidate that the model itself does not rate above the current best, based on the concept of Reinforcement Learning.
+5. **Decide:** — submit the best-supported candidate, overriding the model when the diagnostic gives clearer evidence.
 
 In the final weeks, **K-means clustering** was added as a diagnostic to characterise each function's search space. It separates high-value regions from exploration scatter, confirms multimodality, and exposes dimensions that were never varied inside the best region.
 
