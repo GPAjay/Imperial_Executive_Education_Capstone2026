@@ -1,249 +1,182 @@
-# Imperial_Executive_Education_Capstone2026
-Final capstone project submission towards the Imperial Business Executive Course in Professional Certification in Machine Learning and Artificial Intelligence
+# Bayesian Black-Box Optimisation — Capstone Project
 
-# 🚀 Bayesian Black-Box Optimisation — Capstone Project
-
-![Status](https://img.shields.io/badge/Status-COMPLETE-brightgreen)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![Type](https://img.shields.io/badge/Type-Capstone-green)
-![Modules](https://img.shields.io/badge/Modules-12--24-purple)
-![Week](https://img.shields.io/badge/All%2013%20Weeks-Done-brightgreen)
+![Type](https://img.shields.io/badge/Type-Capstone-informational)
+![Rounds](https://img.shields.io/badge/Rounds-13-purple)
 
-## 📋 Documentation
+Final capstone for the **Imperial College Business School Professional
+Certificate in Machine Learning and Artificial Intelligence**.
 
-| Document | Description |
-|----------|-------------|
-| [DATASHEET.md](BBO_Datasheet.md) | Dataset documentation — composition, collection process, preprocessing and intended uses |
-| [MODEL_CARD.md](BBO_Modelcard.md) | Model card — GP-BBO approach, performance and limitations, final Per-Function results summary, lessons learned |
-| [STRATEGY.md](BBO_Strategy_&_Approach.md) | Core method, strategy evolution, pipeline, Key Techniques, technologies Used |
-| [INITIAL DATA](initial_data) | Initial Data starter pack for all functions as starting point for the Capstone project |
+Over 13 rounds, this project optimises **eight unknown black-box
+functions** of increasing dimensionality (2D to 8D) under a strict query
+budget — one new query per function per round. The internal equations
+are hidden; only inputs and outputs are observable. The task is to find
+the input that **maximises** each function through disciplined,
+evidence-driven, iterative decisions.
 
----
-## 📄 Overview
-
-This project is the Capstone requirement for the **Imperial College AI/ML Programme**, running from Module 12 through to Module 24.
-
-The challenge involves optimising **8 unknown black-box functions** of increasing dimensionality (2D to 8D) using a limited number of weekly queries. Each week, one new input point per function is submitted via the capstone portal, and the resulting output is used to refine the search strategy.
-
-The goal is to find the input that **maximises** the output of each function through intelligent, iterative, data-driven decisions — reflecting how optimisation is approached in real-world ML research and industry applications such as hyperparameter tuning, drug discovery, and industrial process optimisation.
-
-### 💼 Career Relevance
-
-This project directly builds skills needed for data science and ML engineering roles — making decisions under uncertainty, working with limited and expensive-to-acquire data, and iterating strategies based on evidence. These competencies apply to model tuning, A/B testing, experimental design, and any scenario where complete knowledge of the system is unavailable.
+The exercise mirrors how optimisation actually works in research and
+industry — hyperparameter tuning, experimental design, process
+optimisation, drug discovery — where evaluations are expensive, data is
+scarce, and the system is a black box.
 
 ---
 
-## ❓ Problem Statement
+## Documentation
 
-Eight synthetic black-box functions are provided, each simulating a real-world optimisation challenge such as radiation detection, drug discovery, or hyperparameter tuning. The internal equations are unknown — only inputs and outputs are observable.
-
-Each function must be **maximised** using limited weekly queries, making smart search strategy essential.
+| Document | What it covers |
+|----------|----------------|
+| [Strategy & Approach](BBO_Strategy_and_Approach.md) | Core method, pipeline, strategy evolution, final results, lessons learned |
+| [Model Card](BBO_Modelcard.md) | The optimisation approach, performance, assumptions, limitations, ethics |
+| [Datasheet](BBO_Datasheet.md) | Dataset composition, collection process, preprocessing, intended and inappropriate uses |
+| [`initial_data/`](initial_data) | Seed observations (`.npy`) provided as the starting point for each function |
 
 ---
 
-## 🎯 Project Goals
+## The approach in brief
 
-1. **Explore** unknown function landscapes intelligently
-2. **Exploit** promising regions as data grows each week
-3. **Iterate** and refine strategy based on weekly results
-4. **Reflect** on approach and document decision-making throughout
+Each round, for every function, a uniform pipeline runs:
 
-## 📊 Functions Overview
-| Function | Dimensions | Description | Application |
-|----------|-----------|-------------|-------------|
-| F1 | 2D | Radiation Detection | Identify contamination sources in a 2D field |
-| F2 | 2D | Noisy ML Model | Maximise log-likelihood with noisy outputs |
+1. **Fit two surrogates** — a tuned Gaussian Process (primary) and an
+   SVR (independent cross-check).
+2. **Diagnose locally** — a per-dimension "nudge" test maps the gradient
+   around the current best, independent of the acquisition function.
+3. **Propose candidates** — the expected-improvement point, the
+   strongest nudge directions, and a manual hypothesis-driven point.
+4. **Filter with the "untrust rule"** — never chase an acquisition
+   candidate the model itself does not rate above the current best.
+5. **Decide** — submit the best-supported candidate, overriding the
+   model when the diagnostic gives clearer evidence, and log the full
+   rationale.
+
+In the final weeks, **K-means clustering** was added as a diagnostic to
+characterise each function's search space — separating high-value
+regions from exploration scatter, confirming multimodality, and
+exposing dimensions that had never been varied inside the best region.
+
+Full detail: [Strategy & Approach](BBO_Strategy_&_Approach.md).
+
+---
+
+## Functions
+
+| Function | Dim | Scenario | Objective |
+|----------|-----|----------|-----------|
+| F1 | 2D | Radiation Detection | Locate a contamination source in a 2D field |
+| F2 | 2D | Noisy Model | Maximise a noisy log-likelihood |
 | F3 | 3D | Drug Discovery | Minimise side effects (negated for maximisation) |
-| F4 | 4D | Warehouse Placement | Optimise product placement across warehouses |
-| F5 | 4D | Chemical Yield | Maximise yield of a chemical process (unimodal) |
-| F6 | 5D | Cake Recipe Optimisation | Maximise recipe score (negative by design, push toward zero) |
-| F7 | 6D | ML Hyperparameter Tuning | Maximise model accuracy/F1 score |
-| F8 | 8D | Complex 8D Optimisation | Maximise validation accuracy across 8 hyperparameters |
+| F4 | 4D | Warehouse Placement | Optimise product placement |
+| F5 | 4D | Chemical Yield | Maximise yield of a unimodal process |
+| F6 | 5D | Cake Recipe | Maximise a recipe score (negative by design, pushed toward zero) |
+| F7 | 6D | Hyperparameter Tuning | Maximise model accuracy / F1 |
+| F8 | 8D | 8D Optimisation | Maximise validation accuracy across eight hyperparameters |
 
-## 📥 Inputs and Outputs
-
-**Inputs:** Each query is a numerical vector with all values constrained to [0, 1], submitted as a hyphen-separated string with six decimal places.
-
-Example (3D function): `0.241041-0.805036-0.905090`
-
-**Outputs:** A single scalar value. **Higher output = better** (all functions are maximisation tasks).
-
-**Initial data:** 10 observations per function provided as `.npy` files, growing by one point per week.
+**Inputs**: numerical vectors with every value in [0, 1], submitted as a
+hyphen-separated string to six decimals (e.g. `0.241041-0.805036-0.905090`).
+**Outputs**: a single scalar — higher is better.
+**Seed data**: 10 to 40 observations per function (varying by function), growing by one per round.
 
 ---
 
-## 🗓️ Weekly Progress
+## Results
 
-| Module | Week | Status | Strategy Used | Result |
-|--------|------|--------|---------------|--------|
-| Module 12 | Week 1 | ✅ Complete | ................... |
-| Module 13 | Week 2 | ✅ Complete | ................. |
-| Module 14 | Week 3 | ✅ Complete | ............|
-| Module 15 | Week 4 | ✅ Complete |...........|
-| Module 16 | Week 5 | ✅ Complete |...........|
-| Module 17 | Week 6 | ✅ Complete |...........|
-| Module 18 | Week 7 | ✅ Complete |...........|
-| Module 19 | Week 8 | ✅ Complete | ...........|
-| Module 20 | Week 9 | ✅ Complete |.................|
-| Module 21 | Week 10 | ✅ Complete |........................|
-| Module 22 | Week 11 | ✅ Complete | .................|
-| Module 23 | Week 12 | ✅ Complete |..............|
-| Module 24 | Week 13 | ✅ Complete |.......................|
+Best output found per function over the campaign:
 
-## 📈 Week-by-Week outcomes
+| Function | Dim | Best output | Notes |
+|----------|-----|-------------|-------|
+| F1 | 2D | **9.24e-5** | Narrow ridge navigated by small disciplined steps; a per-dimension override found the active axis after a long gradient exhausted, and the final round added a further **+37%** |
+| F2 | 2D | **0.7184** | An exploration probe beat local refinement; function confirmed **bimodal** |
+| F3 | 3D | **-0.0302** | Converged early to a narrow single peak |
+| F4 | 4D | **0.7420** | Tight bracketed peak; clustering revealed untouched dimensions inside the best region |
+| F5 | 4D | **8662.48** | Boundary push gave the biggest single-round gain (**+85%**); a strongly nonlinear ridge, invisible to the surrogate, surfaced via clustering |
+| F6 | 5D | **-0.1609** | The most volatile function (GP error ~67%); minimal steps and distrusting the model finally beat a long-standing best in the last round |
+| F7 | 6D | **2.9906** | Two bold, well-calibrated multi-dimensional moves the surrogate under-predicted — the final round added **+39%** on top of an earlier +19% |
+| F8 | 8D | **9.9345** | Converged; model confidence kept rising while real gains decayed to noise |
 
-### Week 1 (Bayesian Optimisation)
-
-### Week 2 (Logistic Regression)
-
-### Week 3 (Support Vector Machines)
-
-### Week 4 (Neural Networks and Deep Learning: Part One: Introduction)
-
-### Week 5 (Neural Networks and Deep Learning: Part Two: Advanced Concepts)
-
-### Week 6 (Module 17: Neural Networks and Deep Learning: Part Three: Convolutional Neural Networks)
-
-### Week 7 (Hyperparameters and Hyperparameter Tuning)
-
-### Week 8 (Foundations of Generative AI and Large Language Models (LLMs)
-
-### Week 9 (Advanced Gen AI and LLMs)
-
-### Week 10 (Transparency and Interpretability)
-
-### Week 11 (Unsupervised Learning: Part One: Clustering Techniques)
-
-### Week 12 (Unsupervised Learning: Part Two: Principal Component Analysis)
-
-### Week 13 (Reinforcement Learning)
-
-## 🏆 All-Time Best Results — FINAL
-
-| Function | Best Result | Best Week | Notes |
-|----------|-------------|-----------|-------|
-| F1 | **0.33641** ⭐ | **Week 13** | x1=0.635 found true peak — 246% above previous best! |
-| F2 | 0.6478 | Week 6 | Very noisy — same coords gave 0.465 in W11 |
-| F3 | -0.0107 | Week 1 | Stuck — best result still from W1 across all 13 weeks |
-| F4 | -0.1284 | Week 4 | Non-stationary; W13 score-weighted centroid gave -5.585 |
-| F5 | **4039.88** ⭐ | **Week 13** | Removed 0.98 boundary cap — +388 pts (+10.6%) |
-| F6 | -0.2037 | Week 8 | x4=0.718, x5=0.020 confirmed critical — never beaten |
-| F7 | **3.1050** ⭐ | **Week 13** | Score-weighted centroid clinched final new best |
-| F8 | 9.9799 | Week 12 | Trend extrapolation W10→W11→W12 — W13 just below |
+Numbers reflect the final results across all 13 rounds; see the
+[Model Card](BBO_Modelcard.md) for the full performance discussion.
 
 ---
 
-### 🆕 Week 4 Improvements
+## What this project demonstrates
 
-### 🆕 Week 5–6 Improvements
+This capstone is a compact demonstration of skills that transfer
+directly to data science, ML engineering, and quantitative
+decision-making roles:
 
-### 🆕 Week 7–8 Improvements
+- **Decision-making under uncertainty** — every round committed to one
+  action on incomplete information, with an explicit, logged rationale.
+- **Working with scarce, expensive data** — the entire campaign ran on
+  tens of data points per function, exactly the regime where careful
+  modelling matters most (clinical, experimental, and process data
+  rarely arrive in abundance).
+- **Surrogate modelling and calibration** — fitting Gaussian Processes
+  and SVRs, reading their calibration honestly, and knowing when *not*
+  to trust a confident model.
+- **Diagnostic rigour** — building independent checks (per-dimension
+  nudge tests, dual surrogates, clustering) rather than trusting a
+  single black-box recommendation.
+- **Communication and documentation** — a datasheet, a model card, and
+  round-by-round reflections that make every decision auditable and
+  reproducible.
 
-### 🆕 Week 9 Improvements
+These are the same competencies behind model tuning, experimental
+design, A/B testing, and any setting where a system must be improved
+without full knowledge of how it works — including data-driven
+innovation in health and MedTech.
 
-### 🆕 Week 10–11 Improvements
+---
 
-
-## 📁 Repository Structure
-
+## Repository structure
 
 ```
-imperial-aiml-capstone/
+Imperial_Executive_Education_Capstone2026/
 │
 ├── README.md
-├── REFERENCES.md
+├── BBO_Strategy_and_Approach.md
+├── BBO_Modelcard.md
+├── BBO_Datasheet.md
 │
-├── data/
-│   ├── function_1/   (initial_inputs.npy, initial_outputs.npy)
-│   ├── function_2/
-│   └── ... (function_3 through function_8)
+├── F1_Radiation_Detection/
+├── F2_Noisy_Model/
+├── F3_Drug_Discovery/
+├── F4_Warehouse_Placement/
+├── F5_Chemical_Yield/
+├── F6_Cake_Recipe_Optimization/
+├── F7_ML_Hyperparameter_Tuning/
+├── F8_8D_Optimization/
+│     (each function folder contains its per-round query pipeline,
+│      K-means analysis notebook, and per-round log)
 │
-├── module-12/          ← Week 1: Broad GP+UCB exploration
-│   ├── notebooks/
-│   │   └── Module_12_Bayesian_Optimisation_Capstone.ipynb
-│   └── plots/
-│
-├── module-13/          ← Week 2: UCB with log transforms
-│   ├── notebooks/
-│   │   └── Module_13_Week2_Capstone.ipynb
-│   └── plots/
-│
-├── module-14/          ← Week 3: SVM filter (failed)
-│   ├── notebooks/
-│   │   └── Module_14_Week3_Capstone.ipynb
-│   └── plots/
-│
-├── module-15/          ← Week 4: Trust regions + EI ensemble
-│   ├── notebooks/
-│   │   └── Module_15_Week4_Capstone.ipynb
-│   └── plots/
-│
-├── module-16/          ← Week 5: Anchored trust regions
-│   ├── notebooks/
-│   │   └── Module_16_Week5_Capstone.ipynb
-│   └── plots/
-│
-├── module-17/          ← Week 6: Per-function beta tuning (F1, F2, F5 new bests)
-│   ├── notebooks/
-│   │   └── Module_17_Week6_Capstone.ipynb
-│   └── plots/
-│
-├── module-18/          ← Week 7: Tighter radii, lower beta
-│   ├── notebooks/
-│   │   └── Module_18_Week7_Capstone.ipynb
-│   └── plots/
-│
-├── module-19/          ← Week 8: F5, F6, F7 all-time bests
-│   ├── notebooks/
-│   │   └── Module_19_Week8_Capstone.ipynb
-│   └── plots/
-│
-├── module-20/          ← Week 9: F1, F5 all-time bests; F7 momentum
-│   ├── notebooks/
-│   │   └── Module_20_Week9_Capstone.ipynb
-│   └── plots/
-│
-├── module-21/          ← Week 10: F7, F8 all-time bests
-│   ├── notebooks/
-│   │   └── Module_21_Week10_Capstone.ipynb
-│   └── plots/
-│
-├── module-22/          ← Week 11: F7 (3.1034), F8 (9.9750) all-time bests
-│   ├── notebooks/
-│   │   └── Module_22_Week11_Capstone.ipynb
-│   └── plots/
-│
-├── module-23/          ← Week 12: F8 (9.9799) all-time best
-│   ├── notebooks/
-│   │   └── Module_23_Week12_Capstone.ipynb
-│   └── plots/
-│
-└── module-24/          ← Week 13 FINAL: F1 (0.33641), F5 (4039.88), F7 (3.1050) NEW BESTS
-    ├── notebooks/
-    │   └── Module_24_Week13_Capstone.ipynb
-    └── plots/
+├── Weekly_Reflection/     ← round-by-round written reflections
+└── initial_data/          ← seed observations (.npy) for all functions
 ```
 
 ---
-## 💻 How to Run
 
-## 📬 Contact
+## How to run
 
-**Ajay Kumar Ginka Panasa** — Imperial College AI/ML Programme
+```bash
+# Clone
+git clone https://github.com/GPAjay/Imperial_Executive_Education_Capstone2026.git
+cd Imperial_Executive_Education_Capstone2026
 
-🔗 [GitHub Profile](https://github.com/GPAjay/Imperial_Executive_Education_Capstone2026)
+# Environment
+pip install numpy scipy scikit-learn matplotlib jupyter
 
+# Open any function's pipeline or K-means notebook
+jupyter notebook F1_Radiation_Detection/
+```
 
+Each function folder is self-contained: run its pipeline to reproduce a
+round's candidate analysis, or open its K-means notebook to reproduce
+the clustering diagnostics.
 
+---
 
+## Author
 
+**Ajay Kumar Ginka Panasa** — Imperial College Business School AI/ML
+Programme.
 
-
-
-
-
-
-
-
-
-
+🔗 [GitHub](https://github.com/GPAjay/Imperial_Executive_Education_Capstone2026)
