@@ -69,17 +69,7 @@ Final capstone project submission towards the Imperial Business Executive Course
 
 ### Week 13 (Reinforcement Learning)
 
-## 🔬 Strategy & Approach
-
-### Core Method
-
-### 🔄 How the Pipeline Works
-
-### Key Techniques
-
-
 ## 🏆 All-Time Best Results — FINAL
-
 
 ### 🆕 Week 4 Improvements
 
