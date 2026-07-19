@@ -73,6 +73,22 @@ Example (3D function): `0.241041-0.805036-0.905090`
 
 ## 🗓️ Weekly Progress
 
+| Module | Week | Status | Strategy Used | Result |
+|--------|------|--------|---------------|--------|
+| Module 12 | Week 1 | ✅ Complete | ................... |
+| Module 13 | Week 2 | ✅ Complete | ................. |
+| Module 14 | Week 3 | ✅ Complete | ............|
+| Module 15 | Week 4 | ✅ Complete |...........|
+| Module 16 | Week 5 | ✅ Complete |...........|
+| Module 17 | Week 6 | ✅ Complete |...........|
+| Module 18 | Week 7 | ✅ Complete |...........|
+| Module 19 | Week 8 | ✅ Complete | ...........|
+| Module 20 | Week 9 | ✅ Complete |.................|
+| Module 21 | Week 10 | ✅ Complete |........................|
+| Module 22 | Week 11 | ✅ Complete | .................|
+| Module 23 | Week 12 | ✅ Complete |..............|
+| Module 24 | Week 13 | ✅ Complete |.......................|
+
 ## 📈 Week-by-Week outcomes
 
 ### Week 1 (Bayesian Optimisation)
