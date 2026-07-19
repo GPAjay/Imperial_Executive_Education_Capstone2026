@@ -123,6 +123,19 @@ Imperial_Executive_Education_Capstone2026/
 
 ---
 
+## Technologies used
+
+| Category | Technologies |
+|----------|-------------|
+| Language | Python |
+| Libraries | NumPy, SciPy, scikit-learn, Matplotlib |
+| Models | Gaussian Process (Matérn / RBF kernels), SVR |
+| Diagnostics | Per-dimension nudge test, K-means clustering (with silhouette selection), PCA for visualisation |
+| Acquisition | Expected Improvement (bounded radius) |
+| Tooling | Jupyter Notebooks, Git, GitHub |
+
+---
+
 ## How to run
 
 ```bash
