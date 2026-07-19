@@ -121,14 +121,3 @@ zero):
 | Volatility needs its own metric | Spatial clustering alone cannot tell a converged peak from a noisy one; an output-volatility measure (change in output per unit movement in input) was needed to separate signal from noise. |
 | A validated pattern repeats | The same well-calibrated, bold multi-dimensional move that first opened a new regime on one function paid off *again* in the final round, adding a further large gain. Once a pattern is validated by evidence, re-applying it deliberately is more than luck. |
 | Patience beats forcing it | On the most volatile function, a best had stood since early in the campaign. Restraint — minimal steps, no forcing — rather than aggressive probing was what eventually beat it in the last round. |
-
-## Technologies used
-
-| Category | Technologies |
-|----------|-------------|
-| Language | Python |
-| Libraries | NumPy, SciPy, scikit-learn, Matplotlib |
-| Models | Gaussian Process (Matérn / RBF kernels), SVR |
-| Diagnostics | Per-dimension nudge test, K-means clustering (with silhouette selection), PCA for visualisation |
-| Acquisition | Expected Improvement (bounded radius) |
-| Tooling | Jupyter Notebooks, Git, GitHub |
