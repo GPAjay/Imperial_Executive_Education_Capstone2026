@@ -61,6 +61,16 @@ Each function must be **maximised** using limited weekly queries, making smart s
 
 ## 📥 Inputs and Outputs
 
+**Inputs:** Each query is a numerical vector with all values constrained to [0, 1], submitted as a hyphen-separated string with six decimal places.
+
+Example (3D function): `0.241041-0.805036-0.905090`
+
+**Outputs:** A single scalar value. **Higher output = better** (all functions are maximisation tasks).
+
+**Initial data:** 10 observations per function provided as `.npy` files, growing by one point per week.
+
+---
+
 ## 🗓️ Weekly Progress
 
 ## 📈 Week-by-Week outcomes
