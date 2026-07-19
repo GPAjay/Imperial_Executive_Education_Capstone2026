@@ -13,6 +13,19 @@ This project optimises **eight unknown black-box functions** of increasing dimen
 
 The capstone project illustrates how black-box optimisation is applied across research and industry. Examples include ML hyperparameter tuning, experimental design, process optimisation, and drug discovery. In these real-world scenarios, evaluations are often expensive in both cost and time, data is scarce, and the underlying system is a black box. Working with a limited number of query points, the aim is to map the function's landscape and locate its maximum, thereby demonstrating that a black-box function can be characterised and optimised effectively from relatively few samples.
 
+## Career relevance: what this project demonstrates
+
+This capstone is a compact demonstration of skills that transfer directly to data science, ML engineering, and quantitative decision-making roles:
+
+- **Decision-making under uncertainty:** every round committed to one action on incomplete information, with an explicit, logged rationale.
+- **Working with scarce, expensive data:** the project started with a few data points per function, presenting the regimes where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
+- **Surrogate modelling and calibration:** fitting Gaussian Processes and SVRs, rationalizing the calibration, and developing intuition on when to trust a confident model.
+- **Diagnostic rigour:** building independent checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
+- **Communication and documentation:** a datasheet, a model card, and reflections to make every decision auditable and reproducible.
+
+These are core competencies required for model tuning, experimental design, A/B testing, and any setting where a system must be improved without full knowledge of how it works, including data-driven innovation in healthcare and MedTech.
+
+---
 
 ## Documentation
 
@@ -21,9 +34,8 @@ The capstone project illustrates how black-box optimisation is applied across re
 | [DATASHEET](BBO_Datasheet.md) | Dataset composition, collection process, preprocessing, intended and inappropriate uses |
 | [MODEL CARD](BBO_Modelcard.md) | The optimisation approach, performance, assumptions, limitations, ethics |
 | [STRATEGY & APPROACH](BBO_Strategy_and_Approach.md) | Core method, pipeline, strategy evolution, final results, lessons learned |
-| [`initial_data/`](initial_data) | Seed observations (`.npy`) provided as the starting point for each function |
+| [`initial_data/`](initial_data) | Seed observations (`X/Y.npy`) provided as the starting point for each function |
 
----
 
 ## The approach in brief
 
@@ -38,8 +50,6 @@ A uniform pipeline is designed, which runs for each round for every function:
 In the final weeks, **K-means clustering** was added as a diagnostic to characterise each function's search space. It separates high-value regions from exploration scatter, confirms multimodality, and exposes dimensions that were never varied inside the best region.
 
 Full detail: [Strategy & Approach](BBO_Strategy_and_Approach.md).
-
----
 
 ## Functions
 
@@ -56,9 +66,8 @@ Full detail: [Strategy & Approach](BBO_Strategy_and_Approach.md).
 
 **Inputs**: numerical vectors with every value in [0, 1], submitted as a hyphen-separated string to six decimals (e.g. `0.241041-0.805036-0.905090`).
 **Outputs**: a single scalar value (maxima), the highest positive value or closest to zero for negative data points.
-**Seed data**: 10 to 40 observations per function (varying by function), each dataset grows by one per round.
+**Seed data**: 10 to 40 observations per function (varying by function), each dataset grows by one per week.
 
----
 
 ## Results
 
@@ -77,20 +86,6 @@ Best output found per function over the course of the capstone project:
 
 Numbers reflect the final results across all 13 rounds; see the
 [Model Card](BBO_Modelcard.md) for the full performance discussion.
-
----
-
-## Career relevance: What this project demonstrates
-
-This capstone is a compact demonstration of skills that transfer directly to data science, ML engineering, and quantitative decision-making roles:
-
-- **Decision-making under uncertainty:** every round committed to one action on incomplete information, with an explicit, logged rationale.
-- **Working with scarce, expensive data:** the project started with a few data points per function, presenting the regimes where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
-- **Surrogate modelling and calibration:** fitting Gaussian Processes and SVRs, rationalizing the calibration, and developing intuition on when to trust a confident model.
-- **Diagnostic rigour:** building independent checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
-- **Communication and documentation:** a datasheet, a model card, and reflections to make every decision auditable and reproducible.
-
-These are core competencies required for model tuning, experimental design, A/B testing, and any setting where a system must be improved without full knowledge of how it works, including data-driven innovation in healthcare and MedTech.
 
 ---
 
@@ -119,8 +114,6 @@ Imperial_Executive_Education_Capstone2026/
 └── initial_data/          ← seed observations (X/Y.npy) for all functions
 ```
 
----
-
 ## Technologies used
 
 | Category | Technologies |
@@ -131,8 +124,6 @@ Imperial_Executive_Education_Capstone2026/
 | Diagnostics | Per-dimension nudge test, K-means clustering (with silhouette selection), PCA for visualisation |
 | Acquisition | Expected Improvement (bounded radius) |
 | Tooling | Jupyter Notebooks, Git, GitHub |
-
----
 
 ## How to run
 
