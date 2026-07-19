@@ -19,7 +19,7 @@ The exercise mirrors how optimisation actually works in research and industry â€
 
 | Document | What it covers |
 |----------|----------------|
-| [Strategy & Approach](BBO_Strategy_and_Approach.md) | Core method, pipeline, strategy evolution, final results, lessons learned |
+| [STRATEGY & APPROACH](BBO_Strategy_and_Approach.md) | Core method, pipeline, strategy evolution, final results, lessons learned |
 | [MODEL CARD](BBO_Modelcard.md) | The optimisation approach, performance, assumptions, limitations, ethics |
 | [DATASHEET](BBO_Datasheet.md) | Dataset composition, collection process, preprocessing, intended and inappropriate uses |
 | [`initial_data/`](initial_data) | Seed observations (`.npy`) provided as the starting point for each function |
