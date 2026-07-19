@@ -41,10 +41,7 @@ Final capstone project submission towards the Imperial Business Executive Course
 
 ## 🗓️ Weekly Progress
 
-
-
-
-## 📈 Week-by-Week Results Detail
+## 📈 Week-by-Week outcomes
 
 ### Week 1 (Bayesian Optimisation)
 
@@ -61,7 +58,6 @@ Final capstone project submission towards the Imperial Business Executive Course
 ### Week 7 (Hyperparameters and Hyperparameter Tuning)
 
 ### Week 8 (Foundations of Generative AI and Large Language Models (LLMs)
-
 
 ### Week 9 (Advanced Gen AI and LLMs)
 
