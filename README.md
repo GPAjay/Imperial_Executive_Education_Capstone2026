@@ -167,6 +167,10 @@ imperial-aiml-capstone/
 
 ## 📬 Contact
 
+**Ajay Kumar Ginka Panasa** — Imperial College AI/ML Programme
+
+🔗 [GitHub Profile](https://github.com/GPAjay/Imperial_Executive_Education_Capstone2026)
+
 
 
 
