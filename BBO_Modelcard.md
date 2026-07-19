@@ -1,133 +1,205 @@
-# Model Card — BBO Strategy
+# Model Card — BBO Optimisation Strategy
+
+A model card documenting the optimisation *approach* used in this capstone (not a trained predictive model). Follows the model-card framework: overview, intended use, details, performance, assumptions
+and limitations, ethical considerations.
+
+---
 
 ## Overview
 
 - **Name**: Hybrid Surrogate–Diagnostic BBO Strategy
-- **Type**: Sequential black-box optimization with dual-surrogate ensemble (Gaussian Process + SVR), per-dimension diagnostic, and
-  calibration-aware human-in-the-loop decision making.
-- **Version**: Capstone implementation v1.
+- **Type**: Sequential black-box optimisation combining a dual-surrogate ensemble (Gaussian Process + SVR), a per-dimension gradient diagnostic, and calibration-aware human-in-the-loop decision-making.
+- **Version**: Capstone implementation, 13 rounds (v1).
+- **Objective**: Maximise the output of each of eight unknown functions within a fixed query budget.
 
 ## Intended use
 
 ### Suitable for
 
-- Sequential optimization of expensive black-box functions where each query is costly relative to the surrogate fit.
-- Small-data, low-budget settings with tens of queries, low-to-moderate dimensionality (2D–8D).
-- Methodological exercises in surrogate-driven optimization.
-- Settings where human-in-the-loop judgment is permitted alongside the acquisition function.
+- Sequential optimisation of expensive black-box functions, where each evaluation is costly relative to the surrogate fit.
+- Small-data, low-budget settings — tens of queries, low-to-moderate dimensionality (2D–8D).
+- Situations where human judgment is permitted alongside an acquisition function.
+- Methodological learning and teaching of surrogate-driven optimisation.
 
 ### Use cases to avoid
 
-- High-dimensional optimization (>10D) without methodological changes.
+- High-dimensional optimisation (>10D) without methodological changes.
 - Settings requiring formal global-optimality guarantees.
-- For functions with high noise variance relative to signal, the calibration heuristic for this strategy breaks down.
-- Statistical comparison against industrial-grade BBO methods (e.g. TuRBO, HEBO). Sample sizes here are far too small for such comparisons to be valid.
-- Production deployment as an autonomous optimizer and the human-in-loop feedback step is structural to the strategy.
+- Functions with high noise variance relative to signal — the
+  calibration-trust heuristic that anchors this strategy degrades.
+- Statistical benchmarking against industrial BBO methods (e.g. TuRBO,
+  HEBO); the sample sizes here are far too small for valid comparison.
+- Fully autonomous production deployment — the human-in-the-loop step
+  is structural to the strategy, not an optional add-on.
 
 ## Details — strategy evolution
 
-The strategy evolved drastically across rounds. Three broad phases:
+The strategy evolved substantially over the campaign, through three
+broad phases.
 
-### Rounds 1–4 (Initial Exploration)
+### Phase 1 — Exploration (early rounds)
 
-Coarse exploration using the initial dataset's GP fit. Submissions were driven primarily by GP-UCB/EI within a small search radius, with
-little per-function specialization yet. Multiple functions remained flat or negative at this stage.
+Coarse exploration from the seed data, driven mainly by
+expected-improvement search within a small radius, with little
+per-function specialisation. Several functions stayed flat or negative
+at this stage.
 
-### Rounds 5–7 (Regime Detection)
+### Phase 2 — Regime detection (middle rounds)
 
-Recognition that the functions occupied distinct regimes such as smooth-gradient, noisy, multimodal, bracketed-peak, accelerating,
-volatile, steady-gain, broad-plateau. Realization that one strategy could not fit all. Per-function customization began: step sizes, candidate
-patterns, and override logic were tailored to each function's observed behaviour.
+Recognition that the eight functions occupied distinct regimes —
+smooth-gradient, noisy, multimodal, bracketed-peak, accelerating,
+volatile, steady-gain, broad-plateau — and that no single strategy fit
+all of them. Per-function customisation began: step sizes, candidate
+patterns, and override logic tailored to each function's observed
+behaviour.
 
-### Rounds 8–11 (Model-data interplay)
+### Phase 3 — Model–data interplay and clustering diagnostics (late rounds)
 
-Per-dimension nudge tests are systematically used to surface local gradients independent of the GP-EI recommendation. GP-EI was submitted
-only when its own predicted mean exceeded the current best (the "untrust rule"). Manual overrides became routine when the diagnostics contradicted the principled candidate list. Reflection highlighted which assumptions had been validated by data, which had failed, and how
-to calibrate decision making per function.
+Per-dimension nudge tests were used systematically to surface local
+gradients independent of the acquisition function. Expected-improvement
+candidates were submitted only when the GP's own predicted mean at the
+candidate exceeded the current best (the "untrust rule"). K-means
+clustering was introduced as a diagnostic to characterise the search
+space per function — separating high-value regions from exploration
+scatter, confirming multimodality where present, and (crucially)
+revealing which dimensions had never been varied inside the best region.
+Manual overrides became routine and evidence-driven.
 
 ### Key techniques
 
-1. **Gaussian Process regression** with kernel-and-alpha grid search
-   (Matern ν=0.5/1.5/2.5, RBF; alpha 1e-8 to 1e-1) and per-dimension length-scale fitting.
-2. **SVR regression** with C / gamma / epsilon grid search as a secondary surrogate to cross-check the GP.
-3. **Per-dimension nudge test** — small symmetric perturbations from the current best to map local gradient direction and magnitude.
-4. **GP-EI acquisition** with bounded search radius around the current best (typically ±0.05 to ±0.2).
-5. **Manual candidate generation** reflecting the round's working hypothesis (e.g. "continue x5 gradient", "test untested dimension",
-   "fine-tune known peak").
-6. **Calibration-aware trust rule** — only follow the surrogate when its prediction at the current best is accurate to within a
-   function-specific tolerance.
+1. **Gaussian Process regression** — kernel-and-alpha grid search
+   (Matérn ν = 0.5 / 1.5 / 2.5 and RBF; alpha 1e-8 to 1e-1), selecting
+   by log marginal likelihood, with per-dimension length scales.
+2. **SVR regression** — C / gamma / epsilon grid search as a secondary
+   surrogate to cross-check the GP (and to detect when a surrogate is
+   structurally unable to fit a function).
+3. **Per-dimension nudge test** — small symmetric perturbations from the
+   current best, mapping local gradient direction and magnitude.
+4. **EI acquisition** — bounded-radius expected-improvement search
+   (typically ±0.05 to ±0.2 around the current best).
+5. **Manual candidate generation** — points encoding the round's
+   working hypothesis.
+6. **Calibration-trust rule** — follow the surrogate only when its
+   prediction at the current best is accurate to within a
+   function-specific tolerance; scale boldness inversely with that
+   error.
+7. **K-means clustering diagnostics** — per-function cluster
+   characterisation (with silhouette selection and, for volatile
+   functions, an auxiliary output-volatility metric) to distinguish
+   converged peaks from noise and to expose sampling gaps.
 
 ## Performance
 
 ### Metrics
 
-- **Per-function final best y**, compared to the initial dataset's best.
-- **GP calibration error at the current best** — distance between GP prediction and observed y, used as a trust signal.
-- **Number of new-best wins per function** across all rounds.
-- **Gain-per-round trajectory** — used to distinguish accelerating regimes, steady regimes, and diminishing-returns regimes.
+- **Per-function best output**, versus the seed data's best.
+- **GP calibration error at the current best** — the gap between GP
+  prediction and observed value, used directly as a trust signal.
+- **New-best wins per function** across the campaign.
+- **Gain-per-round trajectory** — used to distinguish accelerating,
+  steady, and diminishing-returns regimes.
 
-### Summary (qualitative)
+### Summary of outcomes
 
-- All eight functions showed at least one new best across rounds.
-- Functions with smooth surrogate fits (calibration error < 1%) yielded emergent gains when bold steps were taken, including the project's
-  largest single-round percentage gain.
-- At least one function reached a clear noise floor by R10, with subsequent rounds confirming convergence rather than producing gains.
-- Two functions showed monotonic surrogate-model improvement (rising marginal likelihood) while y gains decayed to noise — a case of model
-  confidence and remaining headroom moving independently.
-- One function exhibited persistent surrogate miscalibration (>5% error) across multiple rounds, where no probe strategy reliably improved on the running best.
+- Every function improved on its seed-data best at least once during the
+  campaign; the final round alone produced four new bests.
+- On smooth, well-calibrated functions (calibration error well under
+  1%), bold multi-dimensional moves produced the largest emergent gains
+  — including a single-round improvement of roughly +85% on one function
+  by testing an unexplored boundary, and a bold acquisition-driven move
+  on another that gained ~+19% mid-campaign and a further ~+39% when the
+  same validated pattern was re-applied in the final round.
+- Several functions reached a clear noise floor mid-to-late campaign;
+  subsequent rounds confirmed convergence rather than producing gains.
+- On the most volatile function, a restrained minimal-step approach
+  finally beat a long-standing best in the last round — a reminder that
+  patience can outperform aggressive probing on noisy landscapes.
+- At least one function showed monotonically rising model confidence
+  (log marginal likelihood climbing round over round) while actual
+  gains decayed to noise — a clean demonstration that model confidence
+  and remaining headroom are independent.
+- One function exhibited persistent surrogate miscalibration (GP error
+  well above 5%) throughout; there, no probe strategy reliably beat the
+  running best, and the correct response was to minimise step size and
+  distrust the model.
 
 ### Failure modes observed
 
-- Multi-dimensional GP-EI recommendations into combinations of known-bad
-  coordinates (early-round losses).
-- Per-dimension nudge predictions off by several percentage points at fine resolution on higher-dimensional functions.
-- Surrogate models are structurally unable to fit a function (SVR on the function with the widest y-range).
+- Multi-dimensional acquisition recommendations that extrapolated into
+  combinations of known-bad coordinates (early-round losses, and a
+  notable mid-campaign loss when a candidate crossed into the valley
+  between two modes of a bimodal function).
+- Per-dimension nudge predictions off by several percent at fine
+  resolution on the higher-dimensional functions.
+- A surrogate structurally unable to fit a function — SVR consistently
+  hallucinated on the widest-output-range functions and had to be
+  ignored there.
 
 ## Assumptions and limitations
 
 ### Assumptions
 
-1. **Calibration error at the current best predicts trustworthiness elsewhere on the surface**
-   Verified on smooth functions; failed on at least one volatile function.
-3. **Single-dimension moves are safer than multi-dimension moves on noisy or volatile functions**
-   Generally true, with a notable counter-example where a well-calibrated GP-EI multi-dim move paid off.
-5. **The per-dimension nudge test surfaces all locally relevant gradients**
-   Worked on most functions, failed on at least one with sharp peaks at sub-step resolution.
-7. **"Irrelevant dimension" classifications from the GP are real properties of the function.**
-   May actually reflect insufficient variation in sampling, not a genuine flat axis.
+1. **Calibration error at the current best predicts trustworthiness
+   elsewhere.** Held on smooth functions; failed on at least one
+   volatile function.
+2. **Single-dimension moves are safer than multi-dimension moves on
+   noisy/volatile functions.** Generally true — with a notable
+   counter-example where a well-calibrated multi-dimensional move paid
+   off handsomely.
+3. **The per-dimension nudge test surfaces all locally relevant
+   gradients.** Worked on most functions; missed a sharp peak that lived
+   below the nudge resolution on one.
+4. **The GP's "irrelevant dimension" classifications are real.** They
+   may instead reflect insufficient sampling variation, not a genuinely
+   flat axis.
 
 ### Limitations
 
 1. Sample efficiency degrades sharply with dimensionality.
-2. Sampling distribution is exploitation-biased. Large fractions of the search space remain unsampled.
-3. No formal global-optimality test is performed. The "function is at peak" conclusion is local-only.
-4. The calibration heuristic is applied uniformly across all eight functions, even though calibration behaviour varies per function.
-5. Statistical claims about strategy effectiveness are not possible from this sample size.
+2. The sampling distribution is exploitation-biased; large regions stay
+   unsampled.
+3. No formal global-optimality test is performed — "at peak"
+   conclusions are local only.
+4. The calibration heuristic is applied uniformly even though
+   calibration behaviour varies markedly per function.
+5. Sample sizes are too small for statistical claims about strategy
+   effectiveness.
 
 ## Ethical considerations
 
 ### Transparency
 
-- Every submission has an associated rationale record and a strategy comment in the code.
-- The audit trail makes the strategy reproducible. A reviewer with the data, scripts, and reflections can reconstruct each submission and
-  its reasoning chain.
-- The weakest point in the audit trail is the human-override justification, is not reproducible in all cases.
-  
+- Every submission has a recorded rationale and a strategy note in the
+  code, so a reviewer with the data, scripts, and reflections can
+  reconstruct each decision.
+- The weakest point in the audit trail is the human-override
+  justification, which is not captured with full rigour in every case.
+
 ### Reproducibility
 
-- Grid searches, kernel choices, and candidate generations are deterministic given the dataset and random seed.
-- Human-in-the-loop decisions require contextual reasoning to be captured  alongside the submission for full reproducibility. Improving this
-  documentation discipline would benefit any reader trying to repeat the work.
+- Grid searches, kernel choices, and candidate generation are
+  deterministic given the dataset and random seed.
+- Human-in-the-loop decisions depend on contextual reasoning that must
+  be recorded alongside the submission for full reproducibility;
+  strengthening that discipline is the clearest improvement available.
 
-### Real-world Adaptation
+### Real-world adaptation
 
-- The strategy generalizes to other small-data BBO settings, but the calibration heuristic must be re-validated per function rather
-  than transferred blindly.
-- Decisions on one function do not predict the same decision payoff on another; Emergent gains are function-specific and cannot be assumed.
-- The approach does NOT produce a generalizable model. Each function's surrogate is local to its query distribution and not deployable
+- The approach generalises to other small-data BBO settings, but the
+  calibration heuristic must be re-validated per function, not
+  transferred blindly.
+- Payoffs are function-specific: a bold move that succeeded on one
+  function is not evidence it will succeed on another.
+- The approach does not produce a reusable predictive model — each
+  surrogate is local to its query distribution and is not deployable
   outside the sampled neighbourhoods.
 
-## Reflection on the model card.
+## Reflection on this model card
 
-This card covers the necessary categories at a level appropriate for a learning project. 
-Additional detail intentionally omitted: per-function numerical y trajectories, specific kernel-alpha winners per round, and wall-clock runtimes.
+This card covers the categories at a depth appropriate for a learning
+project. Per-function numerical trajectories, per-round kernel/alpha
+winners, and wall-clock runtimes are intentionally omitted; they live in
+the data logs and would add length without changing the methodological
+picture. For a production system, the human-override reasoning would
+need to be logged more formally — that is the single change that would
+most improve the card's usefulness.
