@@ -119,6 +119,19 @@ Example (3D function): `0.241041-0.805036-0.905090`
 
 ## 🏆 All-Time Best Results — FINAL
 
+| Function | Best Result | Best Week | Notes |
+|----------|-------------|-----------|-------|
+| F1 | **0.33641** ⭐ | **Week 13** | x1=0.635 found true peak — 246% above previous best! |
+| F2 | 0.6478 | Week 6 | Very noisy — same coords gave 0.465 in W11 |
+| F3 | -0.0107 | Week 1 | Stuck — best result still from W1 across all 13 weeks |
+| F4 | -0.1284 | Week 4 | Non-stationary; W13 score-weighted centroid gave -5.585 |
+| F5 | **4039.88** ⭐ | **Week 13** | Removed 0.98 boundary cap — +388 pts (+10.6%) |
+| F6 | -0.2037 | Week 8 | x4=0.718, x5=0.020 confirmed critical — never beaten |
+| F7 | **3.1050** ⭐ | **Week 13** | Score-weighted centroid clinched final new best |
+| F8 | 9.9799 | Week 12 | Trend extrapolation W10→W11→W12 — W13 just below |
+
+---
+
 ### 🆕 Week 4 Improvements
 
 ### 🆕 Week 5–6 Improvements
