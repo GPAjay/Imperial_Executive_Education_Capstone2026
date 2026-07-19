@@ -17,15 +17,13 @@ The capstone project illustrates how black-box optimisation is applied across re
 
 This capstone is a compact demonstration of skills that transfer directly to data science, ML engineering, and quantitative decision-making roles:
 
-- **Decision-making under uncertainty:** every round committed to one action on incomplete information, with an explicit, logged rationale.
-- **Working with scarce, expensive data:** the project started with a few data points per function, presenting the regimes where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
-- **Surrogate modelling and calibration:** fitting Gaussian Processes and SVRs, rationalizing the calibration, and developing intuition on when to trust a confident model.
-- **Diagnostic rigour:** building independent checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
-- **Communication and documentation:** a datasheet, a model card, and reflections to make every decision auditable and reproducible.
+- **Decision-making under uncertainty:** Each query point is committed to an action/decision based on incomplete information.
+- **Working with scarce, expensive data:** The project starts with a few data points, presenting the challenges where careful modelling is most critical (clinical, experimental, and process data are rarely available in abundance).
+- **Surrogate modelling and calibration:** Fitting Gaussian Processes and SVRs, rationalizing the calibration, and developing intuition on when to trust a confident model.
+- **Diagnostic rigour:** Building independent diagnostic checks (per-dimension nudge tests, dual surrogates, clustering) rather than trusting a single black-box recommendation.
+- **Communication and documentation:** A datasheet, a model card, and reflections to make every decision auditable and reproducible.
 
 These are core competencies required for model tuning, experimental design, A/B testing, and any setting where a system must be improved without full knowledge of how it works, including data-driven innovation in healthcare and MedTech.
-
----
 
 ## Documentation
 
@@ -87,8 +85,6 @@ Best output found per function over the course of the capstone project:
 Numbers reflect the final results across all 13 rounds; see the
 [Model Card](BBO_Modelcard.md) for the full performance discussion.
 
----
-
 ## Repository structure
 
 ```
@@ -135,19 +131,13 @@ cd Imperial_Executive_Education_Capstone2026
 # Environment
 pip install numpy scipy scikit-learn matplotlib jupyter
 
-# Open any function's pipeline or K-means notebook
-jupyter notebook F1_Radiation_Detection/
+# Open any function's pipeline or K-means notebook upyter notebook F1_Radiation_Detection/
 ```
 
-Each function folder is self-contained: run its pipeline to reproduce a
-round's candidate analysis, or open its K-means notebook to reproduce
-the clustering diagnostics.
-
----
+Each function folder is self-contained: run its pipeline to reproduce a round's candidate analysis, or open its K-means notebook to reproduce the clustering diagnostics.
 
 ## Author
 
-**Ajay Kumar Ginka Panasa** — Imperial College Business School AI/ML
-Programme.
+**Ajay Kumar Ginka Panasa** — Imperial College Business School AI/ML Programme.
 
 🔗 [GitHub](https://github.com/GPAjay/Imperial_Executive_Education_Capstone2026)
