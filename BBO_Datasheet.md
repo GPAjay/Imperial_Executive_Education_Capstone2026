@@ -1,7 +1,6 @@
 # Datasheet — BBO Capstone Dataset
 
-A datasheet documenting the dataset assembled over a 13-round black-box optimisation capstone. Follows the datasheet-for-datasets framework (motivation, composition, collection, preprocessing/uses, distribution).
-
+A datasheet documenting the dataset assembled over a 13-round black-box optimisation capstone.
 ---
 
 ## Motivation
