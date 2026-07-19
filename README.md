@@ -81,11 +81,6 @@ Final capstone project submission towards the Imperial Business Executive Course
 
 ### 🆕 Week 10–11 Improvements
 
-### Final Per-Function Results Summary
-
-### 📝 Lessons Learned
-
-## 🛠️ Technologies Used
 
 ## 📁 Repository Structure
 
